@@ -1,21 +1,13 @@
-function wordPattern(pattern: string, s: string): boolean {
-  let answer = false;
-  const pArr = pattern.split('');
-  const setPArr = new Set(pArr);
-  const sArr = s.split(' ');
-  const setSArr = new Set(sArr);
-
-  if (setPArr.size !== setSArr.size || pArr.length !== sArr.length) return false;
-
+const wordPattern = (pattern, str) => {
+  const words = str.split(/\s+/);
   const map = new Map();
-  for (let i = 0; i < pArr.length; i++) {
-    if (map.has(pArr[i])) {
-      if (map.get(pArr[i]) !== sArr[i]) return false;
-    } else {
-      map.set(pArr[i], sArr[i]);
-    }
-  }
 
-  answer = true;
-  return answer;
-}
+  if (words.length !== pattern.length) return false;
+  if (new Set(words).size !== new Set(pattern).size) return false;
+
+  for (let i = 0; i < pattern.length; i++) {
+    if (map.has(pattern[i]) && map.get(pattern[i]) !== words[i]) return false;
+    map.set(pattern[i], words[i]);
+  }
+  return true;
+};
