@@ -1,18 +1,13 @@
-function checkPerfectNumber(num: number): boolean {
-  let answer = false;
-  const temp: number[] = [];
-
-  for (let i = 1; i < num; i++) {
+function checkPerfectNumber(num: number) {
+  let temp = 0;
+  for (let i = 1; i <= num / 2; i++) {
     if (num % i === 0) {
-      temp.push(i);
+      temp += i;
     }
   }
-
-  const sum = temp.reduce((a, b) => a + b, 0);
-
-  if (sum === num) {
-    answer = true;
+  if (temp === num && temp !== 0) {
+    return true;
+  } else {
+    return false;
   }
-
-  return answer;
 }
