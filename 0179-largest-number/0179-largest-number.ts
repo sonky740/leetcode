@@ -6,9 +6,7 @@ function largestNumber(nums: number[]): string {
     return +(bStr + aStr) - +(aStr + bStr);
   });
 
-  for (let i = 0; i < sorted.length; i++) {
-    answer += sorted[i].toString();
-  }
+  answer = sorted.join('');
 
   if (answer[0] === '0') {
     return '0';
