@@ -1,11 +1,13 @@
 function pivotArray(nums: number[], pivot: number): number[] {
-  let answer: number[] = [];
+  const smaller: number[] = [];
+  const greater: number[] = [];
+  const equal: number[] = [];
 
-  answer = nums.filter((num) => num < pivot);
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] < pivot) smaller.push(nums[i]);
+    else if (nums[i] > pivot) greater.push(nums[i]);
+    else equal.push(nums[i]);
+  }
 
-  answer = answer.concat(nums.filter((num) => num === pivot));
-
-  answer = answer.concat(nums.filter((num) => num > pivot));
-
-  return answer;
+  return smaller.concat(equal, greater);
 }
