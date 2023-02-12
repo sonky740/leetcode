@@ -1,8 +1,10 @@
 function moveZeroes(nums: number[]): void {
-  nums.forEach(num => {
-    if (num === 0) {
-      nums.splice(nums.indexOf(num), 1);
-      nums.push(0);
+  let idx = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      nums[idx] = nums[i];
+      nums[i] = idx === i ? nums[i] : 0;
+      idx++;
     }
-  })
+  }
 }
