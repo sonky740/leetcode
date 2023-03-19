@@ -1,12 +1,21 @@
-function isValid(s: string): boolean {
-  let answer = false;
-  const regExp = /(\(\))|(\[\])|(\{\})/g;
-  while (regExp.test(s)) {
-    s = s.replace(regExp, '');
-  }
-  if (s.length === 0) {
-    answer = true;
+function isValid(s: string) {
+  const stack: string[] = [];
+  const bracketsMap: { [key: string]: string } = {
+    '(': ')',
+    '{': '}',
+    '[': ']',
+  };
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    if (bracketsMap[char]) {
+      stack.push(bracketsMap[char]);
+    } else {
+      if (char !== stack.pop()) {
+        return false;
+      }
+    }
   }
 
-  return answer;
+  return stack.length === 0;
 }
