@@ -1,32 +1,36 @@
-function arraysEqual(arr1: number[], arr2: number[]): boolean {
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) return false;
-  }
-
-  return true;
-}
-
 function checkInclusion(s1: string, s2: string): boolean {
   const s1Len = s1.length;
   const s2Len = s2.length;
 
   if (s1Len > s2Len) return false;
 
-  const s1Freq = new Array(26).fill(0);
-  const s2Freq = new Array(26).fill(0);
-  const aCharCode = 'a'.charCodeAt(0);
-
-  for (let i = 0; i < s1Len; i++) {
-    s1Freq[s1.charCodeAt(i) - aCharCode]++;
-    s2Freq[s2.charCodeAt(i) - aCharCode]++;
+  const s1Freq = new Map();
+  
+  for (const char of s1) {
+    s1Freq.set(char, (s1Freq.get(char) || 0) + 1);
   }
-
-  for (let i = 0; i < s2Len - s1Len; i++) {
-    if (arraysEqual(s1Freq, s2Freq)) return true;
-
-    s2Freq[s2.charCodeAt(i) - aCharCode]--;
-    s2Freq[s2.charCodeAt(i + s1Len) - aCharCode]++;
+  
+  let count = s1Len;
+  let left = 0;
+  let right = 0;
+  
+  while (right < s2Len) {
+    if (s1Freq.has(s2[right]) && s1Freq.get(s2[right]) > 0) {
+      count--;
+    }
+    s1Freq.set(s2[right], (s1Freq.get(s2[right]) || 0) - 1);
+    right++;
+    
+    if (count === 0) return true;
+    
+    if (right - left === s1Len) {
+      if (s1Freq.has(s2[left]) && s1Freq.get(s2[left]) >= 0) {
+        count++;
+      }
+      s1Freq.set(s2[left], (s1Freq.get(s2[left]) || 0) + 1);
+      left++;
+    }
   }
-
-  return arraysEqual(s1Freq, s2Freq);
-};
+  
+  return false;
+}
