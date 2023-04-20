@@ -3,29 +3,29 @@ function fractionToDecimal(numerator: number, denominator: number): string {
     return (numerator / denominator).toString();
   }
 
-  let result: string = '';
+  let answer = '';
 
   if (
     (numerator < 0 && denominator > 0) ||
     (numerator > 0 && denominator < 0)
   ) {
-    result += '-';
+    answer += '-';
   }
 
   numerator = Math.abs(numerator);
   denominator = Math.abs(denominator);
 
   let integerPart = Math.floor(numerator / denominator);
-  result += integerPart.toString() + '.';
+  answer += integerPart.toString() + '.';
 
   let remainder = numerator % denominator;
-  let remainderMap = new Map<number, number>();
+  let remainderMap: { [key: number]: number } = {};
 
   let index = 0;
   let decimalPart: string = '';
 
-  while (remainder !== 0 && !remainderMap.has(remainder)) {
-    remainderMap.set(remainder, index);
+  while (remainder !== 0 && remainderMap[remainder] === undefined) {
+    remainderMap[remainder] = index;
 
     remainder *= 10;
     decimalPart += Math.floor(remainder / denominator).toString();
@@ -35,7 +35,7 @@ function fractionToDecimal(numerator: number, denominator: number): string {
   }
 
   if (remainder !== 0) {
-    let repeatIndex = remainderMap.get(remainder);
+    let repeatIndex = remainderMap[remainder];
     decimalPart =
       decimalPart.slice(0, repeatIndex) +
       '(' +
@@ -43,6 +43,6 @@ function fractionToDecimal(numerator: number, denominator: number): string {
       ')';
   }
 
-  result += decimalPart;
-  return result;
+  answer += decimalPart;
+  return answer;
 }
