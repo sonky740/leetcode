@@ -1,12 +1,13 @@
 function maxProduct(nums: number[]): number {
-  let answer = 0;
-  const temp: number[] = [];
+  let [first, second] = [0, 0];
 
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      temp.push((nums[i] - 1) * (nums[j] - 1));
+  for (const number of nums) {
+    if (number > first) {
+      [first, second] = [number, first];
+    } else if (number > second) {
+      second = number;
     }
   }
 
-  return (answer = Math.max(...temp));
+  return (first - 1) * (second - 1);
 }
