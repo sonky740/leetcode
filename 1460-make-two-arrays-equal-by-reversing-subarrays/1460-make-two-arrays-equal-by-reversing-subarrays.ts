@@ -1,17 +1,16 @@
 function canBeEqual(target: number[], arr: number[]): boolean {
-  const targetMap = new Map<number, number>();
-  const arrMap = new Map<number, number>();
+  const data = {};
 
-  for (let i = 0; i < target.length; i++) {
-    targetMap.set(target[i], (targetMap.get(target[i]) || 0) + 1);
-    arrMap.set(arr[i], (arrMap.get(arr[i]) || 0) + 1);
+  for (let i = 0; i < target.length; ++i) {
+    data[target[i]] = data[target[i]] + 1 || 1;
   }
 
-  for (const [key, value] of targetMap) {
-    if (value !== arrMap.get(key)) {
-      return false;
+  for (let i = 0; i < arr.length; ++i) {
+    if (data.hasOwnProperty(arr[i]) === false) return false;
+    if (data.hasOwnProperty(arr[i]) === true) {
+      if (data[arr[i]] <= 0) return false;
+      data[arr[i]] = data[arr[i]] - 1;
     }
   }
-
   return true;
 }
