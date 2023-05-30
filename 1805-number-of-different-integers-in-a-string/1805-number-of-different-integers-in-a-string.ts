@@ -1,6 +1,5 @@
 function numDifferentIntegers(word: string): number {
-  let replacedWord = word.replace(/\D/g, ' ');
-  let numbers = replacedWord.split(' ').filter((str) => str !== '');
+  let numbers = word.split(/[a-z]/i).filter((n) => n.length > 0);
   let set = new Set<string>();
 
   for (let number of numbers) {
