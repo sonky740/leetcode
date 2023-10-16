@@ -1,13 +1,17 @@
 function maximumTripletValue(nums: number[]): number {
-  let max = -1;
+  let answer = 0;
+  let prefixMax = nums[0];
 
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      for (let k = j + 1; k < nums.length; k++) {
-        max = Math.max(max, (nums[i] - nums[j]) * nums[k]);
-      }
-    }
+  const postfixMax = new Array(nums.length);
+  for (let k = nums.length - 1; k >= 0; k--) {
+    postfixMax[k] = Math.max(postfixMax[k + 1] ?? 0, nums[k + 1] ?? 0);
   }
 
-  return max > 0 ? max : 0;
+  for (let j = 1; j in nums; j++) {
+    const value = (prefixMax - nums[j]) * postfixMax[j];
+    answer = Math.max(answer, value);
+    prefixMax = Math.max(prefixMax, nums[j]);
+  }
+
+  return answer;
 }
