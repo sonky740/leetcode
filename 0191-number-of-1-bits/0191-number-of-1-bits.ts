@@ -1,9 +1,11 @@
 function hammingWeight(n: number): number {
   let answer = 0;
-  const str = n.toString(2);
 
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === "1") answer++;
+  while (n > 0) {
+    if (n % 2 === 1) {
+      answer++;
+    }
+    n = Math.floor(n / 2);
   }
 
   return answer;
