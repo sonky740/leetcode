@@ -1,9 +1,8 @@
 function sumOfNumberAndReverse(num: number): boolean {
-  for (let i = 0; i <= num; i++) {
-    let reverse = parseInt(i.toString().split('').reverse().join(''));
-    if (i + reverse === num) {
-      return true;
-    }
+  const middle = Math.floor(num / 2);
+  for (let i = middle; i <= num; i++) {
+    const reverseNum = `${i}`.split('').reverse().join('');
+    if (i + parseInt(reverseNum) === num) return true;
   }
   return false;
 }
