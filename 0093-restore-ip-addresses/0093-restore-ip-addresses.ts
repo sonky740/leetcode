@@ -1,32 +1,26 @@
 function restoreIpAddresses(s: string): string[] {
   const answer: string[] = [];
-
-  function isValid(part: string): boolean {
-    if (part.length > 3) return false;
-    if (part.startsWith('0') && part.length > 1) return false;
-    if (parseInt(part) > 255) return false;
-    return true;
-  }
-
-  const n = s.length;
-  for (let i = 1; i < n && i < 4; i++) {
-    for (let j = i + 1; j < n && j - i < 4; j++) {
-      for (let k = j + 1; k < n && k - j < 4; k++) {
-        const part1 = s.substring(0, i);
-        const part2 = s.substring(i, j);
-        const part3 = s.substring(j, k);
-        const part4 = s.substring(k);
-        if (
-          isValid(part1) &&
-          isValid(part2) &&
-          isValid(part3) &&
-          isValid(part4)
-        ) {
-          answer.push(`${part1}.${part2}.${part3}.${part4}`);
-        }
-      }
+  const dfs = (path: string[], start: number) => {
+    if (path.length === 4 && start === s.length) {
+      answer.push(path.join('.'));
+      return;
     }
-  }
-
+    if (path.length === 4 || start === s.length) {
+      return;
+    }
+    for (let i = start; i < s.length; i++) {
+      const str = s.slice(start, i + 1);
+      if (str.length > 1 && str[0] === '0') {
+        return;
+      }
+      if (parseInt(str) > 255) {
+        return;
+      }
+      path.push(str);
+      dfs(path, i + 1);
+      path.pop();
+    }
+  };
+  dfs([], 0);
   return answer;
-};
+}
