@@ -1,12 +1,8 @@
 function hammingWeight(n: number): number {
   let answer = 0;
-
-  while (n > 0) {
-    if (n % 2 === 1) {
-      answer++;
-    }
-    n = Math.floor(n / 2);
+  while (n !== 0) {
+    n &= n - 1;
+    answer++;
   }
-
   return answer;
 }
