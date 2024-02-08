@@ -1,19 +1,11 @@
 function rowAndMaximumOnes(mat: number[][]): number[] {
-  let max = 0;
-  let index = 0;
-
-  for (let i = 0; i < mat.length; i++) {
-    let sum = 0;
-
-    for (let j = 0; j < mat[i].length; j++) {
-      sum += mat[i][j];
+  const answer = [0, 0];
+  mat.forEach((row, i) => {
+    const count = row.reduce((a, b) => a + b, 0);
+    if (count > answer[1]) {
+      answer[0] = i;
+      answer[1] = count;
     }
-
-    if (max < sum) {
-      max = sum;
-      index = i;
-    }
-  }
-
-  return [index, max];
+  });
+  return answer;
 }
