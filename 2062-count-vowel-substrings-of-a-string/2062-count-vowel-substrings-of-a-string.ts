@@ -1,23 +1,34 @@
 function countVowelSubstrings(word: string): number {
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
   let answer = 0;
 
-  for (let i = 0; i <= word.length - 5; i++) {
-    let obj = { a: 0, e: 0, i: 0, o: 0, u: 0 };
+  function countAllVowelSubstrings(block: string) {
+    let count = 0;
+    for (let i = 0; i < block.length; i++) {
+      let seenVowels = new Set();
+      for (let j = i; j < block.length; j++) {
+        if (vowels.has(block[j])) {
+          seenVowels.add(block[j]);
+          if (seenVowels.size === 5) {
+            count++;
+          }
+        }
+      }
+    }
+    return count;
+  }
 
-    for (let j = i; j < word.length; j++) {
-      if (obj[word[j]] == undefined) break;
-
-      obj[word[j]] = (obj[word[j]] || 0) + 1;
-
-      if (
-        obj['a'] > 0 &&
-        obj['e'] > 0 &&
-        obj['i'] > 0 &&
-        obj['o'] > 0 &&
-        obj['u'] > 0
-      )
-        answer++;
+  let currentBlock = '';
+  for (let i = 0; i <= word.length; i++) {
+    if (i < word.length && vowels.has(word[i])) {
+      currentBlock += word[i];
+    } else {
+      if (currentBlock.length > 0 && new Set(currentBlock).size === 5) {
+        answer += countAllVowelSubstrings(currentBlock);
+      }
+      currentBlock = '';
     }
   }
+
   return answer;
 }
